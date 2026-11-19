@@ -1,0 +1,857 @@
+<!doctype html><html><head>
+<meta name="robots" content="noindex, nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Guia Vitai Care</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: trilho de módulos fixo à esquerda + coluna de leitura de ~860px; cada módulo = ficha (para que serve → tela anotada → passo a passo → dica de suporte) */
+:root{
+  --bg:#F3F7F8; --surface:#FFFFFF; --sunk:#E8F0F2; --ink:#13252E; --muted:#566B74; --line:#D3E0E4;
+  --accent:#0B7584; --accent-ink:#FFFFFF; --accent-soft:#DDF0F2; --pin:#E0512B; --pin-ink:#FFFFFF;
+  --t-red:#D3302F; --t-orange:#EE7A12; --t-yellow:#E9B90B; --t-green:#24945A; --t-blue:#2366C9;
+  --ok:#1E8A52; --ok-soft:#DFF3E8; --warn:#9A6400; --warn-soft:#FCF1D8; --bad:#B4292A; --bad-soft:#FBE3E2;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --rail:288px; --radius:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C161B; --surface:#14222A; --sunk:#0F1C22; --ink:#E2EDF0; --muted:#94AAB3; --line:#253940;
+  --accent:#4CC2D1; --accent-ink:#06252B; --accent-soft:#123A41; --pin:#FF7B52; --pin-ink:#2A0C02;
+  --ok:#5BCB8E; --ok-soft:#123326; --warn:#F2C35B; --warn-soft:#3A2E10; --bad:#FF8A84; --bad-soft:#3D1716;
+  color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0C161B; --surface:#14222A; --sunk:#0F1C22; --ink:#E2EDF0; --muted:#94AAB3; --line:#253940;
+  --accent:#4CC2D1; --accent-ink:#06252B; --accent-soft:#123A41; --pin:#FF7B52; --pin-ink:#2A0C02;
+  --ok:#5BCB8E; --ok-soft:#123326; --warn:#F2C35B; --warn-soft:#3A2E10; --bad:#FF8A84; --bad-soft:#3D1716;
+  color-scheme:dark;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--pin);outline-offset:2px;border-radius:4px}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,4.6vw,3.1rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.55rem,3vw,2.05rem);font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.2rem;font-weight:700}
+h4{font-size:1rem;font-weight:700}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.86em}
+code{background:var(--sunk);border:1px solid var(--line);padding:.05em .35em;border-radius:5px}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+svg.i{width:1.2em;height:1.2em;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- trilho lateral ---- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+.rail{position:fixed;top:0;bottom:0;left:0;width:var(--rail);background:var(--surface);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;z-index:20;padding-top:env(safe-area-inset-top,0px);padding-left:env(safe-area-inset-left,0px)}
+.brand{display:flex;gap:12px;align-items:center;padding:22px 20px 16px}
+.brand-mark{width:40px;height:40px;border-radius:9px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none}
+.brand-mark svg{width:24px;height:24px}
+.brand b{font-family:var(--f-display);font-size:1.12rem;display:block;line-height:1.1}
+.brand span{font-size:.8rem;color:var(--muted)}
+.rail nav{overflow-y:auto;padding:4px 12px 24px;flex:1}
+.rail .grp{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:16px 10px 6px}
+.rail a{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:.95rem;line-height:1.3}
+.rail a:hover{background:var(--sunk)}
+.rail a.on{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.rail a svg{color:var(--muted)}
+.rail a.on svg{color:var(--accent)}
+.progress{margin:0 20px 18px;font-size:.8rem;color:var(--muted)}
+.bar{height:6px;background:var(--sunk);border-radius:99px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .3s}
+.topbar{display:none}
+main{margin-left:var(--rail);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:900px;margin:0 auto;padding-block:40px 80px;display:flex;flex-direction:column;gap:88px}
+@media (max-width:1000px){
+  .rail{transform:translateX(-105%);transition:transform .25s;width:min(86vw,320px);box-shadow:0 10px 40px rgba(0,0,0,.25)}
+  .rail.open{transform:none}
+  .topbar{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:15;background:var(--surface);border-bottom:1px solid var(--line);
+    align-items:center;gap:12px;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .topbar b{font-family:var(--f-display)}
+  main{margin-left:0}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:19}
+}
+.btn{font:inherit;font-size:.95rem;display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  padding:8px 14px;border-radius:8px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+/* ---- abertura ---- */
+.hero{display:grid;gap:22px;padding-top:12px}
+.hero p.lead{font-size:1.18rem;max-width:62ch;color:var(--muted)}
+.idcard{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.idcard div{background:var(--surface);padding:14px 16px;min-width:0}
+.idcard dt{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.idcard dd{margin:4px 0 0;font-weight:700;overflow-wrap:anywhere}
+.note{display:flex;gap:12px;padding:14px 16px;border-radius:var(--radius);background:var(--warn-soft);color:var(--ink);border:1px solid color-mix(in srgb,var(--warn) 30%,transparent)}
+.note svg{color:var(--warn);margin-top:3px}
+.note.info{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
+.note.info svg{color:var(--accent)}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.how div{display:flex;gap:12px;align-items:flex-start}
+.how .ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
+
+/* ---- seções ---- */
+section{scroll-margin-top:70px;display:flex;flex-direction:column;gap:26px}
+.sec-head{display:flex;gap:16px;align-items:flex-start}
+.sec-icon{width:52px;height:52px;border-radius:12px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none}
+.sec-icon svg{width:28px;height:28px}
+.sec-head p{color:var(--muted);margin-top:6px;max-width:62ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.fact h4{display:flex;gap:8px;align-items:center;color:var(--accent);margin-bottom:6px;font-size:.95rem}
+.fact p,.fact li{font-size:.95rem}
+.fact ul{margin:0;padding-left:18px}
+.screen{display:flex;flex-direction:column;gap:12px;padding-top:6px}
+.screen > h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.screen > h3 .path{font-family:var(--f-mono);font-size:.74rem;font-weight:400;color:var(--muted)}
+.screen > p{max-width:68ch}
+
+/* ---- captura anotada ---- */
+.shot{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.shot .chrome{display:flex;gap:6px;align-items:center;padding:8px 12px;background:var(--sunk);border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:.72rem;color:var(--muted);min-width:0}
+.shot .chrome i{width:9px;height:9px;border-radius:50%;background:var(--line);flex:none}
+.shot .chrome span{margin-left:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.frame{position:relative;line-height:0}
+.frame img{width:100%;height:auto;display:block}
+.pin{position:absolute;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;background:var(--pin);color:var(--pin-ink);
+  font:700 .82rem/28px var(--f-body);text-align:center;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35);cursor:pointer;padding:0}
+.pin:hover,.pin.hot{transform:translate(-50%,-50%) scale(1.18)}
+@media (max-width:600px){.pin{width:20px;height:20px;font-size:.66rem;line-height:18px;border-width:1px}}
+.legend{list-style:none;margin:0;padding:12px 16px 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px 22px;border-top:1px solid var(--line)}
+.legend li{display:flex;gap:10px;align-items:flex-start;font-size:.93rem;line-height:1.45;border-radius:6px;padding:3px 4px}
+.legend li.hot{background:var(--accent-soft)}
+.legend b.n{width:22px;height:22px;border-radius:50%;background:var(--pin);color:var(--pin-ink);font-size:.74rem;display:grid;place-items:center;flex:none;margin-top:1px}
+.shot figcaption{padding:0 16px 12px;font-size:.8rem;color:var(--muted);line-height:1.4}
+
+/* ---- passo a passo ---- */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:12px;position:relative;padding-bottom:16px}
+.steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;border:2px solid var(--accent);color:var(--accent);font-weight:700;display:grid;place-items:center;background:var(--surface);z-index:1}
+.steps li:not(:last-child)::after{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:var(--line)}
+.steps li div{padding-top:4px;min-width:0}
+.tip{display:flex;gap:12px;padding:14px 16px;border-radius:var(--radius);background:var(--ok-soft);border:1px solid color-mix(in srgb,var(--ok) 30%,transparent)}
+.tip svg{color:var(--ok);margin-top:3px}
+.tip b{display:block}
+.mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.mini div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:.93rem;min-width:0}
+.mini b{display:block;font-family:var(--f-display);font-size:1rem;margin-bottom:2px}
+.mini .path{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);display:block;margin-top:6px}
+
+/* ---- jornada ---- */
+.journey{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;list-style:none;padding:0;margin:0;counter-reset:j}
+.journey li{counter-increment:j;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;display:flex;flex-direction:column;gap:6px;position:relative;min-width:0}
+.journey li::before{content:counter(j);position:absolute;top:10px;right:12px;font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.journey .ic{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.journey b{font-family:var(--f-display);line-height:1.2}
+.journey small{color:var(--muted);font-size:.84rem;line-height:1.35}
+.journey .where{font-family:var(--f-mono);font-size:.68rem;color:var(--accent)}
+.fork{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.fork{grid-template-columns:1fr}}
+.fork div{border:2px dashed var(--line);border-radius:var(--radius);padding:14px 16px}
+.fork h4{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.diagram{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.diagram svg{display:block;min-width:760px;width:100%;height:auto}
+.diagram text{font-family:var(--f-body);fill:var(--ink)}
+.d-box{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.d-acc{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.5}
+.d-out{fill:var(--bad-soft);stroke:var(--bad);stroke-width:1.5}
+.d-arrow{stroke:var(--muted);stroke-width:1.8;fill:none}
+.d-small{font-size:12px;fill:var(--muted)!important}
+.d-title{font-size:15px;font-weight:700}
+.d-head{fill:var(--muted)}
+
+/* ---- triagem ---- */
+.triage{display:grid;gap:8px}
+.triage div{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;border-radius:8px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.triage span.c{align-self:stretch;display:grid;place-items:center;font-weight:700;color:#fff;padding:10px;font-size:.9rem;text-align:center}
+.triage p{padding:8px 12px 8px 0;font-size:.93rem}
+@media (max-width:480px){.triage div{grid-template-columns:96px 1fr}}
+
+/* ---- anatomia ---- */
+.anat{display:grid;gap:14px}
+.mock{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.mock .hd{display:flex;align-items:center;gap:10px;padding:10px 12px;color:#fff;font-size:.85rem;flex-wrap:wrap}
+.mock.novo .hd{background:#55BED8}
+.mock.classico .hd{background:#55BED8}
+.mock .chip{background:rgba(255,255,255,.25);padding:2px 8px;border-radius:5px;font-family:var(--f-mono);font-size:.72rem}
+.mock .sp{flex:1}
+.mock .bd{padding:10px 12px;font-size:.88rem;color:var(--muted)}
+
+/* ---- tabelas de suporte ---- */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--sunk)}
+tr:last-child td{border-bottom:0}
+
+/* ---- problemas ---- */
+.issue{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.issue summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:center;padding:14px 16px;font-weight:700}
+.issue summary::-webkit-details-marker{display:none}
+.issue summary .sev{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:99px;font-weight:500;flex:none}
+.sev.alta{background:var(--bad-soft);color:var(--bad)}
+.sev.media{background:var(--warn-soft);color:var(--warn)}
+.sev.baixa{background:var(--ok-soft);color:var(--ok)}
+.issue summary .chev{margin-left:auto;transition:transform .2s;color:var(--muted)}
+.issue[open] summary .chev{transform:rotate(90deg)}
+.issue .body{padding:0 16px 16px 16px;display:grid;gap:10px}
+.issue .body ol{margin:0;padding-left:20px}
+.issue .esc{font-size:.88rem;color:var(--muted)}
+.issues{display:grid;gap:10px}
+
+/* ---- glossário ---- */
+.gloss-tools{display:flex;gap:10px;flex-wrap:wrap}
+.gloss-tools input{font:inherit;flex:1;min-width:0;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+dl.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin:0}
+dl.gloss div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+dl.gloss dt{font-family:var(--f-display);font-weight:700}
+dl.gloss dd{margin:2px 0 0;font-size:.93rem;color:var(--muted)}
+
+/* ---- faq ---- */
+.faq{display:grid;gap:8px}
+.faq details{border-bottom:1px solid var(--line);padding:4px 0 12px}
+.faq summary{cursor:pointer;font-weight:700;padding:6px 0}
+.faq p{color:var(--muted);max-width:70ch}
+
+/* ---- quiz ---- */
+.quiz{display:grid;gap:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.q h4{margin-bottom:10px;font-family:var(--f-body);font-size:1.02rem}
+.q .opts{display:grid;gap:8px}
+.q button.opt{font:inherit;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+.q button.opt:hover:not([disabled]){border-color:var(--accent)}
+.q button.opt.right{background:var(--ok-soft);border-color:var(--ok)}
+.q button.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.q button.opt[disabled]{cursor:default}
+.q .why{margin-top:10px;font-size:.92rem;color:var(--muted)}
+.score{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:14px 16px;border-radius:var(--radius);background:var(--accent-soft)}
+.score b{font-family:var(--f-display);font-size:1.6rem}
+
+/* ---- checklist ---- */
+.check{display:grid;gap:8px}
+.check label{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:3px;accent-color:var(--accent);flex:none}
+.check label:has(input:checked){border-color:var(--ok);background:var(--ok-soft)}
+footer.end{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:20px}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></symbol>
+ <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
+ <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></symbol>
+ <symbol id="i-door" viewBox="0 0 24 24"><path d="M14 3H6v18h8"/><path d="M10 12h10M17 9l3 3-3 3"/></symbol>
+ <symbol id="i-triage" viewBox="0 0 24 24"><path d="M12 3v11"/><circle cx="12" cy="17.5" r="3.5"/><path d="M9 6h6M9 9h6"/></symbol>
+ <symbol id="i-steth" viewBox="0 0 24 24"><path d="M6 3v6a4 4 0 008 0V3"/><path d="M10 13v3a4 4 0 008 0v-2"/><circle cx="18" cy="12" r="2"/></symbol>
+ <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3 7v12M3 15h18v4M21 15v-3a3 3 0 00-3-3h-7v6"/><circle cx="7" cy="11" r="2"/></symbol>
+ <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7M12 11v10"/></symbol>
+ <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+ <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></symbol>
+ <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6z"/></symbol>
+ <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 2-2.5 2-2.5 4M12 17h.01"/></symbol>
+ <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 013 3v13a2 2 0 00-2-2H4z"/><path d="M20 4h-6a3 3 0 00-1 .2M20 4v14h-7"/></symbol>
+ <symbol id="i-quiz" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12l3 3 5-6"/></symbol>
+ <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></symbol>
+ <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+ <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></symbol>
+ <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"/></symbol>
+ <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></symbol>
+ <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></symbol>
+ <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+ <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+ <symbol id="i-exit" viewBox="0 0 24 24"><path d="M10 4H5v16h5"/><path d="M14 8l4 4-4 4M18 12H9"/></symbol>
+ <symbol id="i-pill" viewBox="0 0 24 24"><rect x="2.5" y="8" width="19" height="8" rx="4" transform="rotate(-35 12 12)"/><path d="M9.5 8.5l5 7"/></symbol>
+ <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+</svg>
+
+<div class="topbar">
+  <button class="btn" id="openNav" aria-controls="rail" aria-expanded="false"><svg class="i"><use href="#i-menu"/></svg>Módulos</button>
+  <b>Guia Vitai Care</b>
+</div>
+
+<aside class="rail" id="rail" aria-label="Navegação do guia">
+  <div class="brand">
+    <div class="brand-mark"><svg class="i"><use href="#i-pulse"/></svg></div>
+    <div><b>Guia Vitai Care</b><span>Material de estudo do suporte</span></div>
+  </div>
+  <div class="progress">Seções vistas: <span id="seenCount">0</span> de <span id="seenTotal">0</span><div class="bar"><i id="seenBar"></i></div></div>
+  <nav id="toc">
+    <div class="grp">Comece aqui</div>
+    <a href="#inicio"><svg class="i"><use href="#i-home"/></svg>Boas-vindas</a>
+    <a href="#navegacao"><svg class="i"><use href="#i-map"/></svg>Como se movimentar</a>
+    <a href="#jornada"><svg class="i"><use href="#i-pulse"/></svg>A jornada do paciente</a>
+    <div class="grp">Módulos do sistema</div>
+    <a href="#recepcao"><svg class="i"><use href="#i-door"/></svg>Recepção e cadastro</a>
+    <a href="#triagem"><svg class="i"><use href="#i-triage"/></svg>Classificação de risco e filas</a>
+    <a href="#atendimento"><svg class="i"><use href="#i-steth"/></svg>Atendimento clínico</a>
+    <a href="#internacao"><svg class="i"><use href="#i-bed"/></svg>Internação, leitos e alta</a>
+    <a href="#estoque"><svg class="i"><use href="#i-box"/></svg>Farmácia e estoque</a>
+    <a href="#relatorios"><svg class="i"><use href="#i-chart"/></svg>Relatórios</a>
+    <a href="#administracao"><svg class="i"><use href="#i-gear"/></svg>Usuários e acesso</a>
+    <div class="grp">Para o dia a dia do suporte</div>
+    <a href="#problemas"><svg class="i"><use href="#i-wrench"/></svg>Problemas comuns</a>
+    <a href="#faq"><svg class="i"><use href="#i-help"/></svg>Perguntas frequentes</a>
+    <a href="#glossario"><svg class="i"><use href="#i-book"/></svg>Glossário</a>
+    <a href="#quiz"><svg class="i"><use href="#i-quiz"/></svg>Quiz de fixação</a>
+    <a href="#checklist"><svg class="i"><use href="#i-list"/></svg>Checklist do estudo</a>
+  </nav>
+</aside>
+
+<main>
+<div class="col">
+
+<!-- ================= INÍCIO ================= -->
+<section id="inicio" class="hero">
+  <span class="eyebrow">Material de estudo · suporte técnico</span>
+  <h1>Entendendo o Vitai Care, tela por tela</h1>
+  <p class="lead">Este guia explica, em linguagem simples, cada parte do sistema hospitalar que a equipe atende. Ele mostra para que serve cada tela, quem usa, o caminho que o paciente percorre dentro do sistema e o que costuma dar errado.</p>
+  <dl class="idcard">
+    <div><dt>Nome do sistema</dt><dd>Vitai Care</dd></div>
+    <div><dt>Fabricante</dt><dd>Vitai</dd></div>
+    <div><dt>Versão observada</dt><dd class="mono">5.1.36.18</dd></div>
+    <div><dt>Tipo de unidade</dt><dd>Hospital municipal com pronto atendimento</dd></div>
+    <div><dt>Acesso</dt><dd>Navegador (Chrome), com login e senha</dd></div>
+  </dl>
+  <div class="note info"><svg class="i"><use href="#i-info"/></svg><p><b>O nome certo é Vitai Care.</b> No dia a dia ele aparece como "Vitai Care – Powered by Vitai" no rodapé. Não é "TeamEd" nem "Vitae". Usar o nome certo ajuda na hora de abrir chamado com o fornecedor.</p></div>
+  <div class="note"><svg class="i"><use href="#i-alert"/></svg><p><b>Privacidade.</b> Todas as capturas deste guia foram feitas só olhando o sistema, sem salvar nada. Nomes, documentos e dados de pacientes e de usuários foram borrados, e o usuário logado aparece como "USUÁRIO EXEMPLO".</p></div>
+  <div class="how">
+    <div><span class="ic"><svg class="i"><use href="#i-map"/></svg></span><p><b>Leia na ordem.</b> Os módulos seguem o caminho do paciente, da porta de entrada até a alta.</p></div>
+    <div><span class="ic" style="background:var(--pin);color:var(--pin-ink)"><b style="font-size:.85rem">1</b></span><p><b>Toque nos números.</b> Cada captura tem marcadores laranja e a legenda logo abaixo explica cada um.</p></div>
+    <div><span class="ic"><svg class="i"><use href="#i-quiz"/></svg></span><p><b>Teste no final.</b> O quiz e o checklist mostram se o conteúdo ficou.</p></div>
+  </div>
+</section>
+
+<!-- ================= NAVEGAÇÃO ================= -->
+<section id="navegacao">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-map"/></svg></div>
+    <div><span class="eyebrow">Comece aqui</span><h2>Como se movimentar no sistema</h2>
+    <p>Depois do login, o usuário cai no <b>Painel</b>. Dali saem todas as telas. Cada pessoa vê só os itens que o perfil dela permite, então dois usuários podem ver menus diferentes.</p></div></div>
+
+  <div class="screen">
+    <h3>Painel inicial</h3>
+    <figure class="shot" data-shot="painel"></figure>
+  </div>
+
+  <h3>Dois visuais convivem no sistema</h3>
+  <p style="max-width:68ch">O Vitai Care está trocando o visual aos poucos. Algumas telas já têm o <b>visual novo</b> e outras ainda usam o <b>visual clássico</b>. As duas funcionam juntas. Isso é normal e não é erro.</p>
+  <div class="anat">
+    <div class="mock novo"><div class="hd"><span class="chip">logo do hospital</span><span>⌂ NOME DA TELA</span><span class="sp"></span><span class="chip">🔔 alertas</span><span class="chip">▦ apps</span><span class="chip">● perfil</span></div>
+      <div class="bd"><b>Visual novo</b>, usado no Painel, no Dashboard de Emergência, em Movimentação de Leito e em Evolução de Enfermagem. O rodapé mostra o usuário, a seção e a versão.</div></div>
+    <div class="mock classico"><div class="hd"><span>⌂</span><span class="chip">Programas</span><span class="sp"></span><span>USUÁRIO [SEÇÃO]</span><span class="chip">Revision 5.1.36.18</span><span class="chip">✉</span><span class="chip">👤</span><span class="chip">⏻ sair</span></div>
+      <div class="bd"><b>Visual clássico</b>, usado na maioria dos cadastros e no estoque. Tem a estrela ☆ para favoritar, o menu "Programas" para trocar de tela e o botão vermelho para sair.</div></div>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><h4><svg class="i"><use href="#i-search"/></svg>Achar uma tela</h4><p>Digite parte do nome em <b>"Pesquisar funcionalidades"</b>, no topo do menu. O menu está em ordem alfabética.</p></div>
+    <div class="fact"><h4><svg class="i"><use href="#i-user"/></svg>Menu do usuário</h4><p>No ícone de perfil ficam <b>Parâmetros de Acesso</b>, <b>Adicionar Favoritos</b>, <b>Trocar Senha</b> e <b>Sair</b>.</p></div>
+    <div class="fact"><h4><svg class="i"><use href="#i-flag"/></svg>Seção atual</h4><p>O nome entre colchetes, por exemplo <code>[SALA VERDE B]</code>, é a <b>seção</b> em que o usuário está trabalhando. Muitas telas filtram os dados por ela.</p></div>
+    <div class="fact"><h4><svg class="i"><use href="#i-alert"/></svg>Alerta vermelho</h4><p>Várias telas têm um aviso de <b>"ALERTA VERMELHO"</b> com o botão <b>Confirmar Recebimento</b>. O alerta só some depois que alguém confirma que leu.</p></div>
+  </div>
+  <div class="tip"><svg class="i"><use href="#i-bulb"/></svg><p><b>Dica de suporte</b>Quando alguém disser "não aparece a opção X", pergunte primeiro qual usuário e qual seção aparecem no topo da tela. Na maioria das vezes é questão de perfil ou de seção, não de defeito.</p></div>
+</section>
+
+<!-- ================= JORNADA ================= -->
+<section id="jornada">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-pulse"/></svg></div>
+    <div><span class="eyebrow">Visão geral</span><h2>A jornada do paciente dentro do sistema</h2>
+    <p>Quase todo chamado fica mais fácil quando você sabe <b>em que etapa o paciente está</b>. Cada etapa é uma tela diferente e, em geral, uma equipe diferente.</p></div></div>
+  <ol class="journey">
+    <li><span class="ic"><svg class="i"><use href="#i-door"/></svg></span><b>Chegada e cadastro</b><small>A recepção abre o Boletim de Emergência e entrega a pulseira.</small><span class="where">Boletim de Emergência</span></li>
+    <li><span class="ic"><svg class="i"><use href="#i-triage"/></svg></span><b>Classificação de risco</b><small>A enfermagem mede os sinais vitais e define a cor de prioridade.</small><span class="where">Classificação de Risco</span></li>
+    <li><span class="ic"><svg class="i"><use href="#i-list"/></svg></span><b>Fila por cor</b><small>O paciente entra na fila do consultório, ordenado pela cor.</small><span class="where">Monitoramento de Fila</span></li>
+    <li><span class="ic"><svg class="i"><use href="#i-steth"/></svg></span><b>Consulta médica</b><small>O médico registra a anamnese, a prescrição e os exames.</small><span class="where">Prontuário Eletrônico</span></li>
+    <li><span class="ic"><svg class="i"><use href="#i-pill"/></svg></span><b>Medicação e procedimentos</b><small>A enfermagem executa o que foi pedido e a farmácia dispensa os itens.</small><span class="where">Sala de Procedimentos · Dispensação</span></li>
+    <li><span class="ic"><svg class="i"><use href="#i-flag"/></svg></span><b>Desfecho</b><small>O paciente recebe alta ou é internado em um leito.</small><span class="where">Alta · Internar Paciente</span></li>
+  </ol>
+  <div class="fork">
+    <div><h4><svg class="i"><use href="#i-exit"/></svg>Caminho da alta</h4><p>O médico finaliza o atendimento no prontuário e a <b>Alta de Paciente</b> dá baixa no boletim. Se a baixa não for feita, o boletim aparece em <b>Altas Pendentes</b>.</p></div>
+    <div><h4><svg class="i"><use href="#i-bed"/></svg>Caminho da internação</h4><p><b>Internar Paciente</b> associa o paciente a um leito. Depois vêm a <b>Evolução de Paciente Interno</b> todos os dias, a <b>Movimentação de Leito</b> quando ele muda de lugar, a <b>AIH</b> para o faturamento SUS e, no fim, a alta.</p></div>
+  </div>
+  <div class="note info"><svg class="i"><use href="#i-info"/></svg><p><b>As três chaves do paciente.</b> Para achar um atendimento, o sistema pede quase sempre um destes números: <b>Boletim de Atendimento</b> (o atendimento de hoje), <b>Pulseira</b> (o número impresso na pulseira) ou <b>Prontuário</b> (o número fixo do paciente no hospital). Peça sempre um deles ao abrir o chamado.</p></div>
+</section>
+
+<!-- ================= RECEPÇÃO ================= -->
+<section id="recepcao">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-door"/></svg></div>
+    <div><span class="eyebrow">Módulo 1</span><h2>Recepção e cadastro do paciente</h2>
+    <p>É a porta de entrada. Tudo o que acontece depois depende de um cadastro bem feito aqui. Cadastro duplicado ou errado é uma das maiores fontes de chamado.</p></div></div>
+  <div class="facts">
+    <div class="fact"><h4><svg class="i"><use href="#i-user"/></svg>Quem usa</h4><p>Recepção e acolhimento.</p></div>
+    <div class="fact"><h4><svg class="i"><use href="#i-list"/></svg>Telas deste módulo</h4><ul><li>Boletim de Emergência</li><li>Pesquisar Paciente</li><li>CNS Pendentes</li><li>Associação de documento ao Boletim</li><li>Cadastro de Prioridades de Atendimento</li></ul></div>
+  </div>
+
+  <div class="screen">
+    <h3>Boletim de Emergência (BE)</h3>
+    <p>Abre o atendimento do dia. Ele tem três blocos: <b>Dados do paciente</b>, <b>Dados da residência</b> e <b>Dados do atendimento</b>, onde ficam o número da pulseira, a origem, o motivo, o responsável e o meio de transporte. Os campos com <span style="color:var(--t-red);font-weight:700">rótulo vermelho e *</span> são obrigatórios.</p>
+    <figure class="shot" data-shot="boletim"></figure>
+    <ol class="steps">
+      <li><div><b>Busque antes de cadastrar.</b> Digite o nome e clique na lupa. Se o paciente já existe, use o cadastro dele.</div></li>
+      <li><div><b>Confira o aviso de duplicidade.</b> Se o sistema mostrar "Foi identificado que um ou mais dados informados já existem", ele encontrou um cadastro parecido. Escolha <b>Prosseguir com paciente selecionado</b> em vez de criar outro.</div></li>
+      <li><div><b>Preencha os obrigatórios:</b> tipo de atendimento, nome civil, sexo ao nascer, data de nascimento, raça/cor, naturalidade, mãe, endereço, pulseira, origem e detalhe do acidente, quando for o caso.</div></li>
+      <li><div><b>Valide o CNS</b> com <b>Consulta CNS</b>. Se o paciente não tiver, use <b>Cadastrar CNS</b>.</div></li>
+      <li><div><b>Paciente sem identificação?</b> Marque "Paciente não identificado" e registre as características físicas: cor da pele, cabelo, tatuagens e cicatrizes.</div></li>
+    </ol>
+  </div>
+
+  <div class="screen">
+    <h3>Pesquisar Paciente</h3>
+    <p>É a ficha completa do paciente, fora de um atendimento. Use para corrigir dados cadastrais e consultar o histórico. As abas são Histórico de atendimentos, Dados do paciente, Dados socioeconômicos, <b>Log de Alteração</b>, Dados da residência, Prontuários anteriores e Imprimir.</p>
+    <figure class="shot" data-shot="paciente"></figure>
+    <div class="tip"><svg class="i"><use href="#i-bulb"/></svg><p><b>Dica de suporte</b>A aba <b>Log de Alteração</b> mostra quem mudou o quê no cadastro. Ela é a primeira coisa a olhar quando alguém diz "o nome do paciente mudou sozinho".</p></div>
+  </div>
+
+  <div class="mini">
+    <div><b>CNS Pendentes</b>Lista os atendimentos sem Cartão Nacional de Saúde em um período, com filtro por usuário. Sem CNS a produção não é faturada.</div>
+    <div><b>Associação de documento ao BE</b>Anexa arquivos ao boletim. Os tipos são imagem, laudos, PDF e outros.</div>
+    <div><b>Cadastro de Prioridades</b>Cadastra as prioridades legais de atendimento, como idoso, gestante e PcD, que aparecem no campo "Prioridade" do BE.</div>
+  </div>
+  <div class="screen">
+    <h3>CNS Pendentes</h3>
+    <figure class="shot" data-shot="cns"></figure>
+  </div>
+</section>
+
+<!-- ================= TRIAGEM ================= -->
+<section id="triagem">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-triage"/></svg></div>
+    <div><span class="eyebrow">Módulo 2</span><h2>Classificação de risco e filas</h2>
+    <p>A enfermagem avalia o paciente e dá uma <b>cor</b> a ele. A cor decide a ordem na fila: quem está mais grave passa na frente, não quem chegou primeiro.</p></div></div>
+
+  <h3>As cores da fila, como aparecem no Dashboard</h3>
+  <div class="triage" role="list">
+    <div role="listitem"><span class="c" style="background:var(--t-red)">VERMELHO</span><p>Emergência. Atendimento imediato, geralmente direto na Sala Vermelha.</p></div>
+    <div role="listitem"><span class="c" style="background:var(--t-orange)">LARANJA</span><p>Muito urgente. Precisa de atendimento rápido.</p></div>
+    <div role="listitem"><span class="c" style="background:var(--t-yellow);color:#2a2000">AMARELO</span><p>Urgente. Pode aguardar pouco tempo.</p></div>
+    <div role="listitem"><span class="c" style="background:var(--t-green)">VERDE</span><p>Pouco urgente. É a maior parte dos casos.</p></div>
+    <div role="listitem"><span class="c" style="background:var(--t-blue)">AZUL</span><p>Não urgente. Pode ser encaminhado à unidade básica.</p></div>
+    <div role="listitem"><span class="c" style="background:var(--muted)">SUTURA</span><p>Fila própria para pequenos procedimentos de sutura.</p></div>
+  </div>
+  <p class="eyebrow" style="text-transform:none;letter-spacing:0">Os tempos-alvo de cada cor são definidos pelo protocolo do hospital. Confirme com a coordenação de enfermagem.</p>
+
+  <div class="screen">
+    <h3>Classificação de Risco</h3>
+    <p>Busca o paciente pela pulseira, pelo boletim ou pelo nome. Registra a queixa principal, os sinais vitais (pressão, frequências, temperatura, saturação, glicemia/HGT, peso e altura) e os escores de alerta <b>NEWS</b> (adulto), <b>PEWS</b> (criança) e <b>MEOWS</b> (gestante). Também tem um bloco para a mulher em idade fértil e campos de protocolo: AVC/AVE, IAM, Sepse, Dengue, COVID-19 e Notificação de violência.</p>
+    <figure class="shot" data-shot="classificacao"></figure>
+  </div>
+
+  <div class="screen">
+    <h3>Monitoramento de Fila</h3>
+    <p>Escolha a seção (consultório, acolhimento etc.) e clique em <b>Pesquisar</b> para ver quem está aguardando naquele local.</p>
+    <figure class="shot" data-shot="fila"></figure>
+  </div>
+
+  <div class="screen">
+    <h3>Dashboard de Emergência</h3>
+    <p>É o "termômetro" do pronto atendimento em tempo real. É bom de abrir em uma TV na sala da coordenação.</p>
+    <figure class="shot" data-shot="dashboard"></figure>
+  </div>
+</section>
+
+<!-- ================= ATENDIMENTO ================= -->
+<section id="atendimento">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-steth"/></svg></div>
+    <div><span class="eyebrow">Módulo 3</span><h2>Atendimento clínico</h2>
+    <p>É onde médicos e enfermagem registram o cuidado: consulta, prescrição, exames, evolução e procedimentos.</p></div></div>
+
+  <div class="screen">
+    <h3>Prontuário Eletrônico</h3>
+    <p>É a tela principal do médico. No topo ficam os dados do paciente selecionado, inclusive as <b>alergias</b>. As abas guardam todo o atendimento.</p>
+    <figure class="shot" data-shot="prontuario"></figure>
+    <div class="tbl"><table>
+      <thead><tr><th>Grupo de abas</th><th>O que tem dentro</th></tr></thead>
+      <tbody>
+        <tr><td><b>Antes da consulta</b></td><td>Dados anteriores, Dados da Classificação de Risco, Resultados de exames, Histórico do paciente</td></tr>
+        <tr><td><b>Durante</b></td><td>Atendimento, Anamnese / Exame físico, Alergias, Dados complementares, CID10, Prescrição, Parecer, Procedimentos realizados</td></tr>
+        <tr><td><b>Documentos</b></td><td>Receituário, Atestados/Declarações, Formulários, Protocolos, PAPs, Documentos (somente leitura), Prontuário de Rede</td></tr>
+        <tr><td><b>Encerramento</b></td><td>Finalizar, Anotações. Na parte de baixo ficam os botões Imprimir, Reimprimir boletim, Encaminhar e Fechar.</td></tr>
+      </tbody></table></div>
+    <div class="note info"><svg class="i"><use href="#i-info"/></svg><p><b>Estados da prescrição:</b> <b>Aberta</b> (ainda pode editar) → <b>Impressa</b> → <b>Fechada</b>. Para gestantes, o sistema exige a idade gestacional, seja pela DUM ou por um exame anterior, antes de concluir.</p></div>
+  </div>
+
+  <div class="screen">
+    <h3>Evolução de Enfermagem</h3>
+    <p>À esquerda fica a lista de <b>Atendimentos Pendentes</b>. Ao escolher um paciente, a enfermagem registra Anotação, Sinais vitais, Procedimentos realizados e Escores de alerta. Os botões de fila são <b>Iniciar Atendimento</b>, <b>Chamar novamente</b> e <b>Devolver paciente para a fila</b>.</p>
+    <figure class="shot" data-shot="enfermagem"></figure>
+  </div>
+
+  <div class="screen">
+    <h3>Sala de Procedimentos</h3>
+    <p>Mostra tudo o que foi pedido para a enfermagem executar, como medicação, curativo e coleta, com a cor de risco de cada paciente. Para registrar a execução, o profissional confirma com <b>usuário e senha</b>, que valem como assinatura.</p>
+    <figure class="shot" data-shot="procedimentos"></figure>
+  </div>
+  <div class="tip"><svg class="i"><use href="#i-bulb"/></svg><p><b>Dica de suporte</b>Quando aparece uma janela pedindo usuário e senha no meio de um registro, é a <b>assinatura eletrônica</b> do profissional. Ela não é um novo login. Senha errada ali bloqueia só aquele registro.</p></div>
+</section>
+
+<!-- ================= INTERNAÇÃO ================= -->
+<section id="internacao">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-bed"/></svg></div>
+    <div><span class="eyebrow">Módulo 4</span><h2>Internação, leitos e alta</h2>
+    <p>Este módulo cuida de quem fica no hospital: em qual leito, quantos dias, como evolui e como sai. Ele alimenta o <b>Censo</b> e o faturamento (AIH).</p></div></div>
+
+  <div class="screen">
+    <h3>Internar Paciente</h3>
+    <p>Busque pela pulseira ou pelo boletim, escolha a <b>Seção</b> e clique em Pesquisar. Na aba <b>Leito</b>, clique no leito livre para associar o paciente. O botão <b>Pacientes pendentes</b> lista quem tem pedido de internação e ainda não tem leito.</p>
+    <figure class="shot" data-shot="internar"></figure>
+  </div>
+
+  <div class="screen">
+    <h3>Evolução de Paciente Interno</h3>
+    <p>Escolha a seção (ou "Fora de clínica") ou busque pelo boletim, CPF ou nome. A legenda colorida mostra a situação da evolução do dia de cada paciente.</p>
+    <figure class="shot" data-shot="evolucao"></figure>
+  </div>
+
+  <div class="screen">
+    <h3>Movimentação de Leito, visual novo</h3>
+    <p>São três abas: <b>Gestão de transferência interna</b> (pedidos de troca de setor, com status e prioridade), <b>Movimentação de leito</b> (quem está em cada leito agora) e <b>Censo Diário</b>.</p>
+    <figure class="shot" data-shot="leito"></figure>
+  </div>
+
+  <div class="screen">
+    <h3>Censo Diário</h3>
+    <p>É a foto da ocupação do hospital. Pode ser filtrado por unidade, seção, convênio e especialidade, e exportado para Excel ou PDF. O menu <b>CENSO</b> ainda traz as abas Estatística, Histórico de Leito e Paciente-dia.</p>
+    <figure class="shot" data-shot="censo"></figure>
+  </div>
+
+  <div class="screen">
+    <h3>AIH: Autorização de Internação Hospitalar</h3>
+    <p>É o laudo que permite cobrar a internação do SUS. Busque pela pulseira ou pelo boletim. O quadro "Internação" mostra o paciente e a data da primeira internação. As abas são <b>Consultar Solicitações</b> e <b>Editar Solicitação</b>.</p>
+    <figure class="shot" data-shot="aih"></figure>
+  </div>
+
+  <div class="screen">
+    <h3>Alta de Paciente</h3>
+    <p>Dá a <b>baixa</b> (encerramento) no boletim. As abas são <b>Baixar boletim de emergência</b> e <b>Histórico do atendimento</b>. O botão <b>Altas Pendentes</b> lista os boletins que o médico liberou e ainda não foram baixados.</p>
+    <figure class="shot" data-shot="alta"></figure>
+  </div>
+  <div class="tip"><svg class="i"><use href="#i-bulb"/></svg><p><b>Dica de suporte</b>"O leito aparece ocupado, mas o paciente já foi embora" quase sempre é uma <b>alta sem baixa</b>. Confira em Alta de Paciente → Altas Pendentes antes de pensar em erro do sistema.</p></div>
+</section>
+
+<!-- ================= ESTOQUE ================= -->
+<section id="estoque">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-box"/></svg></div>
+    <div><span class="eyebrow">Módulo 5</span><h2>Farmácia e estoque</h2>
+    <p>Controla os produtos (medicamentos e materiais) da entrada pela nota fiscal até o consumo pelo paciente. Cada seção (farmácia/CAF, almoxarifado, salas) tem o seu próprio estoque.</p></div></div>
+
+  <h3>Por onde o produto anda</h3>
+  <div class="diagram" role="img" aria-label="Fluxo do produto: nota de entrada ou entrada direta abastece o estoque da seção; a seção solicitante faz solicitação, a concedente atende; a dispensação entrega ao paciente ou seção; devolução retorna ao estoque; perda e avaria e inventário ajustam o saldo.">
+    <svg viewBox="0 0 900 330" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="d-head"/></marker></defs>
+      <rect x="20" y="30" width="170" height="64" rx="10" class="d-box"/><text x="105" y="58" text-anchor="middle" class="d-title">Movimentação de Nota</text><text x="105" y="78" text-anchor="middle" class="d-small">entrada com nota fiscal</text>
+      <rect x="20" y="120" width="170" height="64" rx="10" class="d-box"/><text x="105" y="148" text-anchor="middle" class="d-title">Entrada Direta</text><text x="105" y="168" text-anchor="middle" class="d-small">entrada sem nota</text>
+      <rect x="255" y="70" width="190" height="80" rx="10" class="d-acc"/><text x="350" y="104" text-anchor="middle" class="d-title">Estoque da seção</text><text x="350" y="124" text-anchor="middle" class="d-small">ex.: CAF / Almoxarifado</text>
+      <rect x="510" y="20" width="170" height="64" rx="10" class="d-box"/><text x="595" y="48" text-anchor="middle" class="d-title">Solicitação</text><text x="595" y="68" text-anchor="middle" class="d-small">a seção pede</text>
+      <rect x="510" y="120" width="170" height="64" rx="10" class="d-box"/><text x="595" y="148" text-anchor="middle" class="d-title">Atender Solicitação</text><text x="595" y="168" text-anchor="middle" class="d-small">o estoque separa e envia</text>
+      <rect x="720" y="120" width="160" height="64" rx="10" class="d-acc"/><text x="800" y="148" text-anchor="middle" class="d-title">Dispensação</text><text x="800" y="168" text-anchor="middle" class="d-small">paciente ou seção</text>
+      <rect x="720" y="230" width="160" height="64" rx="10" class="d-box"/><text x="800" y="258" text-anchor="middle" class="d-title">Devolução</text><text x="800" y="278" text-anchor="middle" class="d-small">o que sobrou volta</text>
+      <rect x="255" y="230" width="190" height="64" rx="10" class="d-out"/><text x="350" y="258" text-anchor="middle" class="d-title">Perda / Avaria</text><text x="350" y="278" text-anchor="middle" class="d-small">vencido ou danificado</text>
+      <rect x="20" y="230" width="170" height="64" rx="10" class="d-box"/><text x="105" y="258" text-anchor="middle" class="d-title">Inventário</text><text x="105" y="278" text-anchor="middle" class="d-small">contagem e ajuste</text>
+      <path d="M190 62 C225 62 225 95 253 100" class="d-arrow" marker-end="url(#ah)"/>
+      <path d="M190 152 C225 152 225 125 253 120" class="d-arrow" marker-end="url(#ah)"/>
+      <path d="M595 84 V118" class="d-arrow" marker-end="url(#ah)"/>
+      <path d="M445 100 C480 100 480 150 508 152" class="d-arrow" marker-end="url(#ah)"/>
+      <path d="M680 152 H718" class="d-arrow" marker-end="url(#ah)"/>
+      <path d="M720 262 C600 262 520 200 447 135" class="d-arrow" marker-end="url(#ah)"/>
+      <path d="M350 150 V228" class="d-arrow" marker-end="url(#ah)"/>
+      <path d="M190 262 C230 262 240 160 268 152" class="d-arrow" marker-end="url(#ah)"/>
+      <text x="600" y="215" class="d-small" text-anchor="middle">volta ao estoque</text>
+    </svg>
+  </div>
+
+  <div class="screen">
+    <h3>Solicitação de Produto</h3>
+    <p>Pedido de produtos de uma seção para outra. Os tipos são <b>Compra</b>, <b>Consumo para paciente</b>, <b>Consumo para seção</b>, <b>Ordem de fornecimento</b> e <b>Transferência</b>. As abas acompanham o pedido: Nova solicitação → Novas → Pendentes → Concedidas → Recebidas (ou Canceladas).</p>
+    <figure class="shot" data-shot="solicitacao"></figure>
+    <ol class="steps">
+      <li><div>Escolha o <b>Tipo</b>, a <b>Seção solicitante</b> (quem pede) e a <b>Seção concedente</b> (quem entrega).</div></li>
+      <li><div>Clique em <b>Salvar / Incluir itens</b>. O sistema cria o número e a sequência.</div></li>
+      <li><div>Adicione os produtos. Os botões de <b>Sugerir reposição</b> calculam a quantidade pelos níveis de segurança, ressuprimento ou máximo.</div></li>
+      <li><div>Clique em <b>Enviar requisição</b>. Quando chegar, a seção confirma com <b>Confirmar recebimento da requisição</b>.</div></li>
+    </ol>
+  </div>
+
+  <div class="screen">
+    <h3>Dispensação para Consumo</h3>
+    <p>Entrega o produto para um <b>paciente</b> (pelo boletim ou pela pulseira) ou para uma <b>seção</b>. Funciona com leitor de código de barras ("Utiliza leitora"). O item só entra na lista quando você <b>pressiona Enter</b> no campo de quantidade.</p>
+    <figure class="shot" data-shot="dispensacao"></figure>
+  </div>
+
+  <div class="screen">
+    <h3>Movimentação de Nota</h3>
+    <p>Registra a nota fiscal: cabeçalho (natureza da operação, fornecedor, número, série, datas, frete, IPI e totais) e depois os itens, com lote e validade. A situação da nota vai de <b>Nova</b> → <b>Baixada</b> (entrou no estoque) e pode ser <b>Cancelada</b> ou <b>Estornada</b>.</p>
+    <figure class="shot" data-shot="nota"></figure>
+  </div>
+
+  <div class="screen">
+    <h3>Consulta de Estoque</h3>
+    <p>Mostra quanto existe de um produto, buscando por nome, código auxiliar, lote, código de barras ou localização. É a primeira tela para responder "tem ou não tem?".</p>
+    <figure class="shot" data-shot="estoque"></figure>
+  </div>
+
+  <div class="mini">
+    <div><b>Atender Solicitação</b>É o lado de quem entrega: filtra os pedidos por data e seção e separa os itens, com opção de leitor de código de barras.</div>
+    <div><b>Devolução de Produto</b>Devolve à seção ou a partir de um paciente. Situações: Nova, Realizada, Cancelada.</div>
+    <div><b>Entrada Direta</b>Entrada rápida de produto em uma seção e localização, sem nota fiscal.</div>
+    <div><b>Inventário de Estoque</b>Contagem física por seção, com número de contagens. Situação Pendente ou Fechado.</div>
+    <div><b>Manutenção em Lote</b>Corrige lote e validade, troca a posição de seção ou localização e coloca o produto em <b>quarentena</b>.</div>
+    <div><b>Saída por Perda / Avaria</b>Baixa produto vencido ou danificado, com motivo.</div>
+    <div><b>Requisição de Compra</b>Avalia o consumo e projeta o saldo para gerar um pedido de compra, com download do arquivo.</div>
+    <div><b>Cadastro de Fornecedor</b>Pessoa física ou jurídica, CNPJ/CPF, contato e categoria de produto.</div>
+    <div><b>Relatórios de estoque</b>Consumo mensal, Log de produto, Mapa de movimentação, Posição de estoque (com validade e quarentena) e Saídas de produto.</div>
+  </div>
+  <div class="tip"><svg class="i"><use href="#i-bulb"/></svg><p><b>Dica de suporte</b>"O produto existe, mas não aparece para dispensar" costuma ter uma destas causas: o saldo está em <b>outra seção</b>, o lote está em <b>quarentena</b> ou vencido, ou a nota ainda está <b>Nova</b> e não foi baixada. Confira nessa ordem.</p></div>
+</section>
+
+<!-- ================= RELATÓRIOS ================= -->
+<section id="relatorios">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-chart"/></svg></div>
+    <div><span class="eyebrow">Módulo 6</span><h2>Relatórios</h2>
+    <p>O menu <b>RELATÓRIOS</b> reúne os relatórios por categoria. Clique na categoria à esquerda para abrir a lista e escolha o relatório. Os filtros aparecem à direita.</p></div></div>
+  <div class="screen">
+    <h3>Central de Relatórios</h3>
+    <figure class="shot" data-shot="relatorios"></figure>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Categoria</th><th>Exemplos de relatórios</th></tr></thead>
+    <tbody>
+      <tr><td><b>Atendimento</b></td><td>Conformidade de boletim, Evoluções registradas, Prescrições registradas, Relatório de ATB (antibióticos), Itens prescritos cancelados</td></tr>
+      <tr><td><b>Emergência</b></td><td>Altas na emergência, Altas pendentes, Pacientes classificados / registrados / atendidos, Atendidos por município, Diagnósticos mais atendidos, Óbitos</td></tr>
+      <tr><td><b>Indicadores</b></td><td>Tempo médio de permanência, Mortalidade &gt;24h e &lt;24h, Úlcera por pressão (Braden), Antibiótico na sepse, Pesquisa de satisfação, Pacientes regulados</td></tr>
+      <tr><td><b>Faturamento</b></td><td>AIHs fechadas, Internações com AIH não faturada, Produtividade e Produção Geral SIA, Produção profissional</td></tr>
+      <tr><td><b>Estoque</b></td><td>Lista de produtos, Saídas por perda/avaria, Consumo analítico e sintético, Rastreabilidade de nota fiscal, Relação de notas</td></tr>
+      <tr><td><b>Internação</b></td><td>Internação hospitalar (entrada), Movimentação de pacientes internados</td></tr>
+      <tr><td><b>Laboratório / Imagem / SADT</b></td><td>Exames prescritos por competência, Exames realizados, Tempo médio de resultado</td></tr>
+      <tr><td><b>Cadastros / Sistema</b></td><td>Permissões do usuário, Usuários ativos por setor, Disponibilidade, Itens de prescrição cadastrados</td></tr>
+      <tr><td><b>Vigilância / Profissional</b></td><td>Lista de notificação compulsória, Produção profissional (sintética e analítica)</td></tr>
+    </tbody></table></div>
+  <div class="tip"><svg class="i"><use href="#i-bulb"/></svg><p><b>Dica de suporte</b>O relatório <b>Permissões do Usuário</b>, em Cadastros, é o melhor caminho para provar o que um usuário pode ou não acessar, antes de mexer no cadastro dele.</p></div>
+</section>
+
+<!-- ================= ADMINISTRAÇÃO ================= -->
+<section id="administracao">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-gear"/></svg></div>
+    <div><span class="eyebrow">Módulo 7</span><h2>Usuários e acesso</h2>
+    <p>É onde nascem os logins dos profissionais. Muitos chamados de "não consigo entrar" ou "não vejo tal tela" se resolvem aqui, sempre com autorização de quem gerencia os acessos no hospital.</p></div></div>
+  <div class="screen">
+    <h3>Cadastro de Usuário</h3>
+    <p>Os blocos são: <b>Dados do Usuário</b> (nome, CPF, conselho profissional como COREN, CRM ou CRF, CNS, vínculo e situação), <b>Dados de Acesso</b> (login, celular, expiração da senha, tempo de inatividade), <b>Dados da ocupação</b> (CBO e profissional a faturar), <b>Carga horária</b> e <b>Assinatura</b>.</p>
+    <figure class="shot" data-shot="usuario"></figure>
+  </div>
+  <div class="facts">
+    <div class="fact"><h4><svg class="i"><use href="#i-user"/></svg>Situação Ativo/Inativo</h4><p>Usuário <b>Inativo</b> não entra. Antes de reativar, confirme que o profissional ainda trabalha na unidade.</p></div>
+    <div class="fact"><h4><svg class="i"><use href="#i-alert"/></svg>Expiração da senha</h4><p>Quando passa a "Data de expiração da senha", o sistema pede uma senha nova no login.</p></div>
+    <div class="fact"><h4><svg class="i"><use href="#i-exit"/></svg>Inatividade</h4><p>O sistema desconecta após um tempo parado. A opção "Permite login exceder tempo de inatividade" muda isso para o usuário.</p></div>
+    <div class="fact"><h4><svg class="i"><use href="#i-steth"/></svg>Ocupação (CBO)</h4><p>Define a <b>produção</b> faturada do profissional. CBO errado gera produção errada no SIA.</p></div>
+  </div>
+  <div class="note"><svg class="i"><use href="#i-alert"/></svg><p><b>Nunca peça nem anote a senha do usuário.</b> Para destravar o acesso, use os fluxos do próprio sistema: <b>Trocar Senha</b> no menu do usuário, ou o reset feito pelo gestor de acessos.</p></div>
+</section>
+
+<!-- ================= PROBLEMAS ================= -->
+<section id="problemas">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-wrench"/></svg></div>
+    <div><span class="eyebrow">Suporte N1</span><h2>Problemas comuns e como resolver</h2>
+    <p>Roteiros de primeira verificação, montados a partir de como as telas funcionam. Se o roteiro não resolver, junte as evidências e escale. A etiqueta mostra o impacto no atendimento.</p></div></div>
+  <div class="issues">
+    <details class="issue"><summary><span class="sev alta">Alto</span>Não consigo entrar no sistema<svg class="i chev"><use href="#i-chev"/></svg></summary><div class="body">
+      <ol><li>Confirme o endereço do sistema e se outras pessoas da unidade conseguem entrar. Se ninguém entra, o problema é de rede ou servidor.</li><li>Peça a mensagem exata, de preferência em print.</li><li>Senha expirada? O sistema pede troca no login.</li><li>Usuário <b>Inativo</b> ou com data de exclusão preenchida? Isso fica no Cadastro de Usuário.</li><li>Teste em uma janela anônima do Chrome para descartar cache ou cookies antigos.</li></ol>
+      <p class="esc"><b>Escale quando:</b> vários usuários estiverem sem acesso ou aparecer erro de servidor.</p></div></details>
+    <details class="issue"><summary><span class="sev media">Médio</span>"A opção X não aparece no meu menu"<svg class="i chev"><use href="#i-chev"/></svg></summary><div class="body">
+      <ol><li>Veja o usuário e a <b>seção</b> no topo da tela. O menu muda conforme o perfil.</li><li>Use a busca "Pesquisar funcionalidades" no menu.</li><li>Gere o relatório <b>Permissões do Usuário</b> e compare com um colega que vê a opção.</li><li>Peça a liberação ao gestor de acessos, com o nome exato da funcionalidade.</li></ol></div></details>
+    <details class="issue"><summary><span class="sev alta">Alto</span>Paciente cadastrado em duplicidade<svg class="i chev"><use href="#i-chev"/></svg></summary><div class="body">
+      <ol><li>Localize os dois cadastros em <b>Pesquisar Paciente</b> e anote os números de prontuário.</li><li>Veja em qual deles estão os atendimentos (aba Histórico).</li><li>Oriente a recepção a sempre buscar com a lupa e a aceitar o aviso de duplicidade.</li><li>A unificação dos cadastros normalmente é feita pelo N2 ou pelo fornecedor. Abra o chamado com os dois prontuários.</li></ol></div></details>
+    <details class="issue"><summary><span class="sev media">Médio</span>Leito aparece ocupado, mas o paciente já saiu<svg class="i chev"><use href="#i-chev"/></svg></summary><div class="body">
+      <ol><li>Abra <b>Alta de Paciente → Altas Pendentes</b>. Se o paciente estiver lá, falta a baixa do boletim.</li><li>Confira em <b>Movimentação de Leito</b> se ele não foi apenas transferido.</li><li>Confira a aba <b>Gestão de transferência interna</b> e veja se há pedido parado.</li></ol></div></details>
+    <details class="issue"><summary><span class="sev media">Médio</span>Produto tem saldo, mas não dá para dispensar<svg class="i chev"><use href="#i-chev"/></svg></summary><div class="body">
+      <ol><li>Em <b>Consulta de Estoque</b>, veja <b>em qual seção</b> está o saldo e compare com a "Seção concedente" escolhida.</li><li>Veja se o lote está em <b>quarentena</b> ou vencido em <b>Manutenção em Lote</b>.</li><li>Veja se a nota de entrada ainda está <b>Nova</b> (não baixada).</li><li>Lembre o usuário de <b>apertar Enter</b> na quantidade.</li></ol></div></details>
+    <details class="issue"><summary><span class="sev baixa">Baixo</span>Impressão do boletim, da pulseira ou do receituário não sai<svg class="i chev"><use href="#i-chev"/></svg></summary><div class="body">
+      <ol><li>Confira se a impressora certa está escolhida no campo <b>Impressora</b> da tela, quando ele existe.</li><li>Veja se o Chrome bloqueou pop-ups do site. Várias impressões abrem em uma nova janela.</li><li>Teste imprimir uma página qualquer para descartar problema da impressora ou do driver.</li><li>Use <b>Reimprimir boletim</b> no Prontuário para gerar de novo.</li></ol></div></details>
+    <details class="issue"><summary><span class="sev baixa">Baixo</span>O alerta vermelho não some da tela<svg class="i chev"><use href="#i-chev"/></svg></summary><div class="body">
+      <ol><li>O alerta precisa ser confirmado com <b>Confirmar Recebimento</b>.</li><li>No Painel, a caixa <b>"Ocultar confirmados"</b> controla se os alertas já lidos aparecem.</li></ol></div></details>
+    <details class="issue"><summary><span class="sev media">Médio</span>O sistema "desloga" sozinho<svg class="i chev"><use href="#i-chev"/></svg></summary><div class="body">
+      <ol><li>É o tempo de inatividade. O usuário ficou parado e a sessão expirou.</li><li>Oriente a salvar o que está fazendo antes de sair do computador.</li><li>Uma exceção é feita no Cadastro de Usuário, só com aprovação do gestor.</li></ol></div></details>
+    <details class="issue"><summary><span class="sev media">Médio</span>Produção ou AIH não aparece no faturamento<svg class="i chev"><use href="#i-chev"/></svg></summary><div class="body">
+      <ol><li>Veja se o atendimento tem <b>CNS</b> (tela CNS Pendentes).</li><li>Confira o <b>CBO</b> e o "Profissional a faturar" no cadastro do profissional.</li><li>Rode <b>Internações com AIH não faturadas</b> em Relatórios → Faturamento.</li></ol></div></details>
+  </div>
+  <div class="note info"><svg class="i"><use href="#i-info"/></svg><p><b>O que mandar ao escalar:</b> o print da tela com a mensagem, o usuário e a seção, o número do <b>boletim, da pulseira ou do prontuário</b> (nunca o nome completo em canal aberto), a data e hora, e o que já foi testado.</p></div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-help"/></svg></div>
+    <div><span class="eyebrow">Dúvidas</span><h2>Perguntas frequentes</h2></div></div>
+  <div class="faq">
+    <details><summary>Qual a diferença entre Boletim, Pulseira e Prontuário?</summary><p>O <b>Boletim</b> é o número de um atendimento: o paciente ganha um novo a cada visita. A <b>Pulseira</b> é o número impresso na pulseira do paciente durante aquela passagem. O <b>Prontuário</b> é o número fixo do paciente no hospital, que acompanha todas as visitas.</p></details>
+    <details><summary>Por que algumas telas parecem "antigas" e outras "modernas"?</summary><p>O fornecedor está atualizando o visual aos poucos. A Movimentação de Leito, por exemplo, mostra "Você está usando a nova versão" e um botão para voltar à versão anterior.</p></details>
+    <details><summary>O que é a "Seção" que aparece entre colchetes?</summary><p>É o setor em que o usuário está trabalhando, como Sala Verde B, CAF ou Acolhimento. Ela define filas, estoque e listas que aparecem para ele.</p></details>
+    <details><summary>O que significam NEWS, PEWS e MEOWS?</summary><p>São escores de alerta precoce calculados a partir dos sinais vitais. O NEWS é usado em adultos, o PEWS em crianças e o MEOWS em gestantes e puérperas. Quanto maior o número, maior o risco de piora.</p></details>
+    <details><summary>Dá para exportar os dados?</summary><p>Sim. O Censo e várias listas novas têm <b>Exportar para Excel</b> e <b>Exportar para PDF</b>, e os relatórios geram arquivo.</p></details>
+    <details><summary>O que é Bionexo, que aparece na Solicitação de Produto?</summary><p>É uma plataforma externa de compras. O campo indica se a solicitação de compra foi enviada para ela.</p></details>
+    <details><summary>O suporte pode alterar registros clínicos?</summary><p>Não. Prescrição, evolução e classificação são documentos assinados pelo profissional. O suporte orienta, mas a correção é feita pelo próprio profissional ou pelo fluxo oficial do hospital.</p></details>
+  </div>
+</section>
+
+<!-- ================= GLOSSÁRIO ================= -->
+<section id="glossario">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-book"/></svg></div>
+    <div><span class="eyebrow">Consulta rápida</span><h2>Glossário</h2><p>As siglas e os termos que aparecem nas telas.</p></div></div>
+  <div class="gloss-tools"><label for="gq" class="eyebrow" style="align-self:center">Filtrar</label><input id="gq" type="search" placeholder="Digite uma sigla ou palavra, por exemplo AIH"></div>
+  <dl class="gloss" id="gloss"></dl>
+  <p id="gnone" hidden style="color:var(--muted)">Nenhum termo encontrado.</p>
+</section>
+
+<!-- ================= QUIZ ================= -->
+<section id="quiz">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-quiz"/></svg></div>
+    <div><span class="eyebrow">Fixação</span><h2>Quiz: você está pronto para o chamado?</h2><p>Dez perguntas sobre situações reais. Clique em uma resposta para ver se acertou e o porquê.</p></div></div>
+  <div class="quiz" id="quizBox"></div>
+  <div class="score"><span>Acertos:</span><b id="qScore">0 / 10</b><button class="btn" id="qReset">Recomeçar quiz</button></div>
+</section>
+
+<!-- ================= CHECKLIST ================= -->
+<section id="checklist">
+  <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-list"/></svg></div>
+    <div><span class="eyebrow">Autoavaliação</span><h2>Checklist do estudo</h2><p>Marque o que você já consegue fazer sozinho. As marcas ficam salvas neste navegador.</p></div></div>
+  <div class="check" id="checkBox"></div>
+  <footer class="end">Guia montado em 13/11/2026 a partir da navegação, só de leitura, no Vitai Care versão 5.1.36.18. As telas podem mudar em versões futuras. Os dados pessoais foram borrados e os exemplos são fictícios.</footer>
+</section>
+
+</div>
+</main>
+
+<script>
+/* ---------- capturas anotadas: [x,y] em pixels da captura original (1920 de largura) ---------- */
+const SHOTS={
+ painel:{h:855,url:"",alt:"Painel inicial com menu lateral e alertas",pins:[[120,84,"Busca do menu: digite parte do nome da tela."],[110,330,"Menu com todas as telas liberadas para o perfil, em ordem alfabética."],[350,85,"Meus Alertas Ativos: avisos para o usuário. \"Ocultar confirmados\" esconde os já lidos."],[1772,32,"Notificações (sino) e atalho de aplicativos."],[1880,34,"Perfil: Parâmetros de Acesso, Favoritos, Trocar Senha e Sair."],[300,830,"Usuário logado e seção atual entre colchetes."],[1850,830,"Versão do sistema. Informe sempre ao abrir chamado."]]},
+ boletim:{h:855,url:"",alt:"Formulário do Boletim de Emergência",pins:[[1817,93,"Acolhimentos pendentes: quem passou pelo acolhimento e ainda não tem boletim."],[100,217,"Tipo de atendimento (obrigatório)."],[505,275,"Nome civil e lupa: busque antes de criar um cadastro novo."],[115,325,"Rótulos em vermelho são campos obrigatórios."],[450,542,"Consulta e cadastro do CNS (Cartão Nacional de Saúde)."],[1105,316,"Tempo médio atual para atendimento."],[107,684,"Bloco Dados da Residência: CEP, município, logradouro e telefones."]]},
+ paciente:{h:300,url:"",alt:"Pesquisar paciente com abas",pins:[[1870,96,"Lupa: abre a busca do paciente."],[600,158,"Abas da ficha. \"Log de Alteração\" mostra quem mudou o cadastro."],[44,216,"Disquete: salva as alterações do cadastro."]]},
+ cns:{h:260,url:"",alt:"Filtro de CNS pendentes",pins:[[330,100,"Período: data inicial e final."],[440,128,"Filtrar por usuário que fez o cadastro."],[222,172,"Pesquisar."]]},
+ classificacao:{h:855,url:"",alt:"Classificação de risco",pins:[[1847,93,"Fila de espera para classificação."],[300,255,"Busca por pulseira, boletim ou nome."],[113,335,"Dados do paciente vindos do boletim, só para leitura."],[150,792,"Motivo do atendimento (obrigatório). Abaixo ficam a queixa, os sinais vitais e os escores."]]},
+ fila:{h:300,url:"",alt:"Monitoramento de fila",pins:[[345,102,"Escolha a seção ou o consultório."],[558,102,"Pesquisar mostra quem está aguardando."]]},
+ dashboard:{h:855,url:"",alt:"Dashboard de Emergência com filas por cor e ocupação de leitos",pins:[[168,135,"Pacientes com permanência maior que 24h no PA."],[168,240,"Registrados nas últimas 24h."],[168,345,"Aguardando classificação de risco."],[643,170,"Cada fila tem contadores por cor."],[643,420,"TM: tempo médio de espera daquela cor."],[1751,132,"Total de leitos, ocupados e taxa de ocupação."],[1430,520,"Ocupação por sala: livres e ocupados."]]},
+ prontuario:{h:370,url:"",alt:"Prontuário eletrônico",pins:[[330,170,"Chaves de busca: boletim, pulseira ou prontuário."],[1808,170,"Atendimentos Pendentes: a fila do médico."],[585,248,"Alergias em destaque."],[400,302,"Abas liberadas: consulta e histórico."],[1300,302,"Abas apagadas só liberam depois de iniciar o atendimento."]]},
+ enfermagem:{h:520,url:"",alt:"Evolução de enfermagem",pins:[[120,86,"Atendimentos Pendentes da seção."],[90,120,"Filtro por número do boletim."],[520,86,"Abas: Anotação, Sinais Vitais, Procedimentos e Escores."],[40,286,"Imprimir a evolução."]]},
+ procedimentos:{h:480,url:"",alt:"Sala de procedimentos",pins:[[300,107,"Abrir direto pelo boletim ou pela pulseira."],[1862,172,"Atualizar a lista."],[185,262,"Cor de risco do paciente."],[1790,262,"Ações: visualizar e executar. Pede usuário e senha como assinatura."]]},
+ internar:{h:480,url:"",alt:"Internar paciente",pins:[[1826,92,"Pacientes pendentes de leito."],[160,180,"Buscar por pulseira ou boletim."],[684,314,"Escolha a seção e pesquise os leitos."],[600,410,"Aba Leito: clique no leito livre para associar."]]},
+ evolucao:{h:300,url:"",alt:"Evolução de paciente interno",pins:[[60,104,"Por seção ou fora de clínica."],[280,152,"Seção de internação."],[800,152,"Busca por boletim, CPF ou nome."],[1752,156,"Legenda: Realizado, Atualizado e Pendente."],[128,196,"Pacientes liberados para transferência interna."]]},
+ leito:{h:660,url:"",alt:"Movimentação de leito, nova versão, com tabela borrada",pins:[[45,112,"Aviso de nova versão da tela."],[1505,107,"Avaliar a nova versão (gostei / não gostei)."],[1690,107,"Voltar para a versão anterior."],[330,196,"Abas: transferências, movimentação e censo."],[1240,317,"Filtros por coluna."],[900,450,"Lista de leitos ocupados (dados borrados)."],[1836,604,"Recarregar a lista."]]},
+ censo:{h:590,url:"",alt:"Censo diário",pins:[[466,194,"Aba Censo Diário."],[200,296,"Filtros: unidade, seção, convênio e especialidade."],[1500,288,"Incluir leitos livres e RN no binômio."],[1780,286,"Pesquisar."],[200,418,"Exportar para Excel ou PDF."]]},
+ aih:{h:410,url:"",alt:"Tela de AIH",pins:[[300,192,"Busca por pulseira ou boletim."],[70,239,"Quadro com os dados da internação."],[150,347,"Abas Consultar e Editar Solicitação."]]},
+ alta:{h:380,url:"",alt:"Alta de paciente",pins:[[1826,94,"Altas pendentes: liberadas, mas ainda sem baixa."],[200,200,"Busca por boletim, pulseira ou nome."],[110,336,"Abas: baixar o boletim e histórico do atendimento."]]},
+ solicitacao:{h:855,url:"",alt:"Solicitação de produto",pins:[[520,166,"Abas que acompanham o pedido."],[900,202,"Aviso: escolha a seção concedente e clique em Incluir itens."],[300,298,"Tipo da solicitação."],[300,326,"Integração com a Bionexo (compras)."],[300,460,"Seção solicitante (quem pede) e concedente (quem entrega)."],[160,736,"Salvar / Incluir itens e Imprimir requisição."]]},
+ dispensacao:{h:600,url:"",alt:"Dispensação para consumo",pins:[[300,168,"Seção concedente: de onde sai o produto."],[60,210,"Dispensar para Paciente ou para Seção."],[600,252,"Identificação do paciente."],[130,326,"Ligar o leitor de código de barras."],[260,530,"Quantidade: aperte Enter para incluir o item."]]},
+ nota:{h:855,url:"",alt:"Movimentação de nota",pins:[[500,166,"Abas: cabeçalho, itens, notas de entrada e de saída, ordens pendentes e pesquisa."],[150,264,"Natureza da operação (compra, doação, contagem inicial…)."],[150,292,"Fornecedor, número e série da nota."],[150,672,"Totais: produtos, frete, IPI e descontos."],[44,780,"Salvar o cabeçalho e seguir para os itens."]]},
+ estoque:{h:360,url:"",alt:"Consulta de estoque",pins:[[320,168,"Produto ou código auxiliar, lote, código de barras e localização."],[52,288,"Pesquisar o saldo."]]},
+ relatorios:{h:520,url:"",alt:"Central de relatórios",pins:[[90,250,"Categorias: clique para abrir a lista de relatórios."],[1000,250,"Área do relatório escolhido, com filtros."]]},
+ usuario:{h:855,url:"",alt:"Cadastro de usuário",pins:[[110,166,"Dados do Usuário: nome, CPF e conselho."],[175,250,"Campos com * são obrigatórios."],[150,462,"Situação Ativo/Inativo."],[150,544,"Login do profissional."],[130,634,"Expiração da senha e tempo de inatividade."],[34,770,"Salvar."]]}
+};
+document.querySelectorAll('figure.shot').forEach(fig=>{
+  const k=fig.dataset.shot,s=SHOTS[k]; if(!s) return;
+  fig.innerHTML=`<div class="chrome"><i></i><i></i><i></i><span>Vitai Care</span></div>
+   <div class="frame"><img src="img/${k}.jpg" alt="${s.alt}" loading="lazy" width="1600" height="${Math.round(s.h*1600/1920)}"></div>
+   <ol class="legend"></ol><figcaption>Captura real com dados pessoais borrados.</figcaption>`;
+  const fr=fig.querySelector('.frame'),lg=fig.querySelector('.legend');
+  s.pins.forEach((p,i)=>{
+    const b=document.createElement('button');b.className='pin';b.textContent=i+1;b.type='button';
+    b.style.left=(p[0]/1920*100)+'%';b.style.top=(p[1]/s.h*100)+'%';b.setAttribute('aria-label','Marcador '+(i+1)+': '+p[2]);
+    const li=document.createElement('li');li.innerHTML=`<b class="n">${i+1}</b><span></span>`;li.querySelector('span').textContent=p[2];
+    const on=v=>{b.classList.toggle('hot',v);li.classList.toggle('hot',v)};
+    b.addEventListener('mouseenter',()=>on(true));b.addEventListener('mouseleave',()=>on(false));
+    b.addEventListener('focus',()=>on(true));b.addEventListener('blur',()=>on(false));
+    b.addEventListener('click',()=>{li.scrollIntoView({block:'nearest',behavior:'smooth'});on(true);setTimeout(()=>on(false),1600)});
+    li.addEventListener('mouseenter',()=>on(true));li.addEventListener('mouseleave',()=>on(false));
+    fr.appendChild(b);lg.appendChild(li);
+  });
+});
+
+/* ---------- glossário ---------- */
+const GL=[
+ ["AIH","Autorização de Internação Hospitalar. Documento usado para cobrar a internação do SUS."],
+ ["Alta / Baixa","Encerramento do atendimento. A \"baixa\" fecha o boletim no sistema."],
+ ["ATB","Antibiótico. Aparece em relatórios de controle de uso."],
+ ["BE / Boletim","Boletim de Emergência: o registro de um atendimento no pronto atendimento."],
+ ["Bionexo","Plataforma externa de compras integrada à Solicitação de Produto."],
+ ["CAF","Central de Abastecimento Farmacêutico, o estoque central da farmácia."],
+ ["CBO","Classificação Brasileira de Ocupações. Define a profissão para o faturamento."],
+ ["Censo","Retrato de quem está internado em cada leito em um dia."],
+ ["CID-10","Classificação Internacional de Doenças: código do diagnóstico."],
+ ["CNS","Cartão Nacional de Saúde (cartão do SUS). Necessário para o faturamento."],
+ ["Classificação de risco","Avaliação que dá a cor de prioridade ao paciente."],
+ ["COREN / CRM / CRF","Conselhos profissionais de enfermagem, medicina e farmácia."],
+ ["Dispensação","Entrega do produto da farmácia ao paciente ou à seção."],
+ ["DUM","Data da Última Menstruação, usada para calcular a idade gestacional."],
+ ["Evolução","Registro diário de como o paciente está."],
+ ["HGT","Hemoglicoteste: medida da glicose no dedo."],
+ ["Leito","Cama numerada de uma enfermaria ou sala."],
+ ["Lote","Grupo de um produto com a mesma fabricação e validade."],
+ ["MEOWS","Escore de alerta para gestantes e puérperas."],
+ ["NEWS","National Early Warning Score: escore de alerta para adultos."],
+ ["Nota de entrada","Nota fiscal registrada para colocar produtos no estoque."],
+ ["NRA","Número e data que aparecem na dispensação e na solicitação para paciente, junto com o médico prescritor. Confirme o uso exato com a farmácia."],
+ ["PEWS","Escore de alerta para crianças."],
+ ["Prescrição","Pedido médico de medicamentos, cuidados e exames."],
+ ["Prontuário","Número fixo do paciente e todo o seu histórico clínico."],
+ ["Pulseira","Número de identificação impresso na pulseira do paciente."],
+ ["Quarentena","Bloqueio de um lote de produto, por exemplo por vencimento."],
+ ["SADT","Serviço de Apoio Diagnóstico e Terapêutico: exames de laboratório e imagem."],
+ ["Seção","Setor do hospital: sala, consultório, farmácia, almoxarifado."],
+ ["SIA","Sistema de Informações Ambulatoriais do SUS: produção ambulatorial."],
+ ["Sutura","Fila separada para pequenos procedimentos de sutura."],
+ ["TM","Tempo médio de espera mostrado no Dashboard."]
+];
+const gl=document.getElementById('gloss'),gq=document.getElementById('gq'),gn=document.getElementById('gnone');
+function drawG(){const q=(gq.value||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');gl.innerHTML='';let c=0;
+ GL.forEach(([t,d])=>{const hay=(t+' '+d).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');if(q&&!hay.includes(q))return;c++;
+  const w=document.createElement('div');w.innerHTML='<dt></dt><dd></dd>';w.querySelector('dt').textContent=t;w.querySelector('dd').textContent=d;gl.appendChild(w)});gn.hidden=c>0}
+gq.addEventListener('input',drawG);drawG();
+
+/* ---------- quiz ---------- */
+const QZ=[
+ ["Uma enfermeira diz que não encontra a tela \"Internar Paciente\" no menu. O que você verifica primeiro?",["Reinstalar o Chrome","O perfil e a seção do usuário, e a busca do menu","Pedir a senha dela para testar","Limpar o banco de dados"],1,"O menu mostra só o que o perfil libera. Confira o usuário e a seção no topo e use a busca \"Pesquisar funcionalidades\"."],
+ ["Qual número é fixo do paciente e acompanha todas as visitas?",["Boletim","Pulseira","Prontuário","NRA"],2,"O Boletim e a Pulseira mudam a cada atendimento. O Prontuário é fixo."],
+ ["O leito aparece ocupado, mas o paciente foi para casa. Onde olhar primeiro?",["Cadastro de Fornecedor","Alta de Paciente → Altas Pendentes","Dashboard de Emergência","CNS Pendentes"],1,"Normalmente o médico liberou, mas ninguém deu a baixa no boletim."],
+ ["Na recepção, ao digitar o nome, aparece \"um ou mais dados informados já existem\". O certo é:",["Ignorar e criar outro cadastro","Prosseguir com o paciente encontrado, se for a mesma pessoa","Fechar o sistema","Apagar o cadastro antigo"],1,"É a proteção contra duplicidade. Use o cadastro existente."],
+ ["A cor LARANJA no Dashboard significa:",["Não urgente","Fila de sutura","Muito urgente","Paciente internado"],2,"Vermelho é emergência, laranja é muito urgente, amarelo é urgente, verde é pouco urgente e azul é não urgente."],
+ ["O produto tem saldo, mas não aparece para dispensar. Qual destas NÃO é uma causa provável?",["O saldo está em outra seção","O lote está em quarentena","A nota ainda está Nova","O paciente não tem pulseira de cor verde"],3,"A cor do paciente não bloqueia a dispensação. Seção, quarentena e nota não baixada bloqueiam."],
+ ["No meio do registro na Sala de Procedimentos aparece um pedido de usuário e senha. É:",["Um vírus","A assinatura eletrônica do profissional","Um erro do servidor","Um novo login obrigatório"],1,"O sistema pede a credencial para assinar o registro."],
+ ["Qual relatório ajuda a provar o que um usuário pode acessar?",["Óbitos","Permissões do Usuário","Consumo mensal","Relação de Notas"],1,"Ele fica em Relatórios → Cadastros."],
+ ["A produção de um profissional não aparece no SIA. Um ponto a conferir é:",["O CBO no cadastro de usuário","A cor da tela","A impressora","O tema do Chrome"],0,"O CBO e o \"profissional a faturar\" definem a produção."],
+ ["Ao escalar um chamado sobre um paciente, você deve enviar:",["Nome completo e CPF em grupo de mensagens","Print, usuário/seção e número do boletim ou do prontuário","A senha do usuário","Nada, só \"não funciona\""],1,"Identifique pelo número e nunca exponha dados pessoais nem senhas."]
+];
+const qb=document.getElementById('quizBox'),qs=document.getElementById('qScore');let score=0,answered=0;
+function drawQ(){qb.innerHTML='';score=0;answered=0;qs.textContent='0 / '+QZ.length;
+ QZ.forEach(([q,opts,ok,why],i)=>{const d=document.createElement('div');d.className='q';
+  d.innerHTML=`<h4>${i+1}. </h4><div class="opts"></div><p class="why" hidden></p>`;d.querySelector('h4').append(q);
+  const o=d.querySelector('.opts'),w=d.querySelector('.why');
+  opts.forEach((t,j)=>{const b=document.createElement('button');b.className='opt';b.type='button';b.textContent=t;
+   b.addEventListener('click',()=>{o.querySelectorAll('button').forEach(x=>x.disabled=true);
+    o.children[ok].classList.add('right');if(j!==ok)b.classList.add('wrong');else score++;answered++;
+    w.textContent=(j===ok?'Correto. ':'Não é essa. ')+why;w.hidden=false;qs.textContent=score+' / '+QZ.length;});o.appendChild(b)});
+  qb.appendChild(d)});}
+document.getElementById('qReset').addEventListener('click',drawQ);drawQ();
+
+/* ---------- checklist ---------- */
+const CK=["Sei explicar a diferença entre Boletim, Pulseira e Prontuário","Encontro qualquer tela pela busca do menu","Sei onde ver o usuário, a seção e a versão do sistema","Conheço os três blocos do Boletim de Emergência","Sei orientar sobre o aviso de cadastro duplicado","Sei o que cada cor de risco significa","Entendo para que serve o Dashboard de Emergência","Conheço as abas principais do Prontuário Eletrônico","Sei que usuário e senha no registro é a assinatura eletrônica","Sei o caminho da internação: internar, evoluir, movimentar, AIH e alta","Sei encontrar Altas Pendentes","Entendo o fluxo do produto: nota, estoque, solicitação, dispensação e devolução","Sei as três causas comuns de \"produto não aparece\"","Sei abrir a Central de Relatórios e achar Permissões do Usuário","Sei o que conferir em um usuário que não consegue entrar","Sei o que mandar ao escalar, sem expor dados pessoais"];
+let saved={};try{saved=JSON.parse(localStorage.getItem('vitai-check')||'{}')}catch(e){saved={}}
+const cb=document.getElementById('checkBox');
+CK.forEach((t,i)=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" id="ck${i}"><span></span>`;l.querySelector('span').textContent=t;
+ const inp=l.querySelector('input');inp.checked=!!saved[i];inp.addEventListener('change',()=>{saved[i]=inp.checked;try{localStorage.setItem('vitai-check',JSON.stringify(saved))}catch(e){}});cb.appendChild(l)});
+
+/* ---------- navegação: seção ativa, progresso, menu mobile ---------- */
+const links=[...document.querySelectorAll('#toc a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+let seen={};try{seen=JSON.parse(localStorage.getItem('vitai-seen')||'{}')}catch(e){seen={}}
+document.getElementById('seenTotal').textContent=secs.length;
+function upSeen(){const n=Object.keys(seen).length;document.getElementById('seenCount').textContent=n;document.getElementById('seenBar').style.width=(n/secs.length*100)+'%'}
+upSeen();
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id));
+  if(!seen[id]){seen[id]=1;try{localStorage.setItem('vitai-seen',JSON.stringify(seen))}catch(x){}upSeen()}}})},{rootMargin:'-30% 0px -60% 0px'});
+secs.forEach(s=>s&&io.observe(s));
+const rail=document.getElementById('rail'),ob=document.getElementById('openNav');let scrim=null;
+function setNav(o){rail.classList.toggle('open',o);ob.setAttribute('aria-expanded',o);if(o){scrim=document.createElement('div');scrim.className='scrim';scrim.onclick=()=>setNav(false);document.body.appendChild(scrim)}else if(scrim){scrim.remove();scrim=null}}
+ob.addEventListener('click',()=>setNav(!rail.classList.contains('open')));
+links.forEach(a=>a.addEventListener('click',()=>{if(matchMedia('(max-width:1000px)').matches)setNav(false)}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setNav(false)});
+</script>
+
+</body></html>
